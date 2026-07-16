@@ -5,7 +5,10 @@ package com.amigoscode._2_developers._3_packages;
 
 
 // TODO: 2 - Import java.time.LocalDate, then use it in the printToday() method below.
-
+import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalDate;
+import static java.lang.Math.PI;
 
 /**
  * Package and Import Exercises
@@ -21,7 +24,11 @@ public class PackageDemo {
     public static void useListFromUtil() {
         // TODO: 1 (continued) - Create a List<String> using ArrayList, add three fruits,
         //  and print the list. Make sure you have the import statements at the top.
-
+        List<String> fruits = new ArrayList<>();
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Orange");
+        System.out.println(fruits);
     }
 
     /**
@@ -30,7 +37,8 @@ public class PackageDemo {
     public static void printToday() {
         // TODO: 2 (continued) - Use LocalDate.now() to get today's date and print it.
         //  Make sure you have the import statement at the top.
-
+        LocalDate today =  LocalDate.now();
+        System.out.println(today);
     }
 
     /**
@@ -41,7 +49,12 @@ public class PackageDemo {
         // TODO: 3 - Create a java.util.HashMap<String, Integer> using the fully qualified
         //  class name (no import). Put two entries (e.g., "Alice"->90, "Bob"->85) and print it.
         //  Example: java.util.HashMap<String, Integer> map = new java.util.HashMap<>();
+        java.util.HashMap<String, Integer> map = new java.util.HashMap<>();
+        map.put("Alice", 90);
+        map.put("Bob", 85);
+        System.out.println(map);
 
+        //Digital filing cabinet
     }
 
     // TODO: 4 - Add a static import for java.lang.Math.PI at the top of this file,
@@ -57,7 +70,8 @@ public class PackageDemo {
     public static double circleArea(double radius) {
         // TODO: 4 (continued) - Return PI * radius * radius using the statically imported PI.
         //  You need to add: import static java.lang.Math.PI; at the top of this file.
-        return 0;
+        return PI * radius * radius;
+        //returns area of the circle with given radius
     }
 
     /**
@@ -69,7 +83,8 @@ public class PackageDemo {
         //  in this project (e.g., com.amigoscode._2_developers._2_conditionals.IfStatements).
         //  Call one of its static methods and print the result.
         //  Example: String result = com.amigoscode._2_developers._2_conditionals.IfStatements.evenOrOdd(4);
-
+        String result = com.amigoscode._2_developers._2_conditionals.IfStatements.evenOrOdd(4);
+        System.out.println(result);
     }
 
     public static void main(String[] args) {
@@ -89,3 +104,4 @@ public class PackageDemo {
         useClassFromAnotherPackage();
     }
 }
+
