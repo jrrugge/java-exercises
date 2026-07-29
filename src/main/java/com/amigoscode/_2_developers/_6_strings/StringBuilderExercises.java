@@ -20,7 +20,13 @@ public class StringBuilderExercises {
         // TODO: 1 - Create a new StringBuilder.
         //  Append "Hello, ", then name, then "! You are ", then age, then " years old."
         //  Convert to String and return.
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello, ")
+          .append(name)
+          .append("! You are ")
+          .append(age)
+          .append(" years old. ");
+        return sb.toString();
     }
 
     /**
@@ -36,7 +42,17 @@ public class StringBuilderExercises {
         //  Find the index of the first space using indexOf(" ").
         //  Insert middleName + " " at position (spaceIndex + 1).
         //  Convert to String and return.
-        return null;
+
+        StringBuilder sb = new StringBuilder(fullName);
+       //find where the space character sits
+        int spaceIndex = sb.indexOf(" ");
+
+        //insert the middle name right after the space
+        int insertPosition = spaceIndex + 1;
+        //space formatting after insert
+        sb.insert(insertPosition, middleName + " ");
+
+        return sb.toString();
     }
 
     /**
@@ -51,7 +67,19 @@ public class StringBuilderExercises {
         //  Use deleteCharAt(i) to remove characters that are vowels.
         //  Hint: check if "aeiouAEIOU".indexOf(ch) >= 0
         //  Convert to String and return.
-        return null;
+        //create an empty builder to store the good characters
+        StringBuilder sB = new StringBuilder(text);
+
+        //Loop through the springbuilder backwards
+       for(int i = sB.length()-1; i >= 0; i--) {
+           char ch = sB.charAt(i);
+
+           if ("aeiouAEIOU".indexOf(ch) >= 0) {
+               // 4. Use deleteCharAt(i) to remove the vowel.
+               sB.deleteCharAt(i);
+           }
+       }
+        return sB.toString();
     }
 
     /**
@@ -62,7 +90,11 @@ public class StringBuilderExercises {
      */
     public static String reverseText(String text) {
         // TODO: 4 - Create a StringBuilder from text, call reverse(), convert to String.
-        return null;
+
+        StringBuilder Sb = new StringBuilder(text);
+        Sb.reverse();
+
+        return Sb.toString();
     }
 
     /**
@@ -78,7 +110,22 @@ public class StringBuilderExercises {
         //  Call toUpperCase() on that String (String method, not StringBuilder).
         //  Create a new StringBuilder from the uppercased String, append "!!!"
         //  Return the final String.
-        return null;
+
+        // 1. Convert 'text' to a StringBuilder.
+        StringBuilder sb = new StringBuilder(text);
+
+        // 2. Use toString() to convert the StringBuilder to a String.
+        String regularString = sb.toString();
+
+        // 3. Call toUpperCase() on that String (String method, not StringBuilder).
+        String upperCased = regularString.toUpperCase();
+
+        // 4. Create a new StringBuilder from the uppercased String, append "!!!"
+        StringBuilder finalSb = new StringBuilder(upperCased);
+        finalSb.append("!!!");
+
+        // 5. Return the final String.
+        return finalSb.toString();
     }
 
     /**
@@ -94,7 +141,20 @@ public class StringBuilderExercises {
         //  Append each value, and append a comma between values (but NOT after the last one).
         //  Hint: you can check if it's not the last element, or use deleteCharAt at the end.
         //  Return the result as a String.
-        return null;
+        StringBuilder SB = new StringBuilder();
+
+        for(int i = 0; i < values.length; i++) {
+       //Always append this item
+        SB.append(values[i]);
+
+        //only append a value if this is not the last item
+            if(i < values.length-1) {
+                SB.append("," + " ");
+            }
+        }
+
+
+        return SB.toString();
     }
 
     public static void main(String[] args) {
