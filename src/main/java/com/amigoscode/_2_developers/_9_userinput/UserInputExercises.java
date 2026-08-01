@@ -20,7 +20,10 @@ public class UserInputExercises {
     public static String readString(Scanner scanner) {
         // TODO: 1 - Prompt the user with "Enter your name: " (use System.out.print).
         //  Read a full line using scanner.nextLine() and return it.
-        return null;
+
+        System.out.print("Enter Your Name: ");
+        return scanner.nextLine();
+
     }
 
     /**
@@ -38,7 +41,16 @@ public class UserInputExercises {
         //    catch InputMismatchException, print "Invalid input!", and return -1.
         //  Don't forget to consume the leftover newline with scanner.nextLine()
         //  after reading the int (both in success and failure cases).
-        return 0;
+        System.out.println("Enter a number: ");
+        try {
+            int number = scanner.nextInt();
+            scanner.nextLine(); //consume leftover newline
+            return number;
+        } catch(InputMismatchException e) {
+            System.out.println("Invalid Input!");
+            scanner.nextLine(); //consume leftover invalid token and newline
+            return -1;
+        }
     }
 
     /**
@@ -53,18 +65,29 @@ public class UserInputExercises {
         //  Read a line with scanner.nextLine().
         //  If the line equals "quit" (case-insensitive), break out of the loop.
         //  Otherwise, print "You entered: " followed by the input.
+        while (true) {
+            System.out.println("Enter text  (or 'quit' to stop): ");
+            String input = scanner.nextLine();
 
+            if (input.equalsIgnoreCase("quit")) {
+                break;
+            }
+            System.out.println("You entered: " + input);
+        }
     }
 
     /**
-     * Validates that an age is between 0 and 150 (inclusive).
-     *
-     * @param age the age to validate
+     * Validates that an age is between 0 and 150 (inclusive).*
+     9* @param age the age to validate
      * @return true if valid, false otherwise
      */
     public static boolean isValidAge(int age) {
         // TODO: 4 - Return true if age is between 0 and 150 (inclusive), false otherwise.
-        return false;
+        //if (age >=0 && age <= 150) {
+          //  return true;
+        //} //else
+        //    return false;
+        return age >=0 && age <= 150;
     }
 
     /**
@@ -75,7 +98,7 @@ public class UserInputExercises {
      */
     public static boolean isValidEmail(String email) {
         // TODO: 5 - Return true if email is not null and contains "@", false otherwise.
-        return false;
+        return email != null && email.contains("@");
     }
 
     /**
@@ -92,6 +115,63 @@ public class UserInputExercises {
         //  3. Ask for email. Keep asking until isValidEmail() returns true.
         //  4. Print a summary: "Registration complete!"
         //     "Name: ...", "Age: ...", "Email: ..."
+        //1. Ask for name
+        String name = "";
+        while (name.equals("")) {
+            System.out.println("Enter Your Name: ");
+            name = scanner.nextLine();
+
+            if (name.equals("")) {
+                System.out.println("Name cannot be empty!");
+            }
+        }
+
+        //2. Get Age
+        int age = -1;
+        boolean isAgeValid = false;
+
+        while (isAgeValid == false) {
+            System.out.println("Enter Your Age: ");
+            try {
+                age = scanner.nextInt();
+                scanner.nextLine(); //clear the leftover new line
+
+                //Check if the number is within the correct range
+                if (age >=0 && age <= 150) {
+                    isAgeValid = true;
+                } else {
+                    System.out.println("Invalid Age, Must be between 0 and 150");
+                }
+
+            } catch(InputMismatchException e) {
+                System.out.println("Invalid input, Please enter a whole number");
+                scanner.nextLine();
+            }
+        } //3. Get email
+
+        String email = "";
+        boolean isEmailValid = false;
+
+        while (isEmailValid == false) {
+            System.out.println("Enter Your Email: ");
+            email = scanner.nextLine();
+
+            //Check if email contains @ and isn't empty
+            if (email.contains("@")) {
+                isEmailValid = true;
+            } else {
+                System.out.println("Invalid email. Must contain @!" );
+            }
+        } //4. Print Summary
+
+        // 4. Print Summary
+        System.out.println("\nRegistration complete!");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Email: " + email);
+
+
+
 
     }
 
