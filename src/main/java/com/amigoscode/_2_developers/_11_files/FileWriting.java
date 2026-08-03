@@ -27,7 +27,7 @@ public class FileWriting {
     public static void writeString(String filePath, String content) throws IOException {
         // TODO: 1 - Use Files.writeString(Path.of(filePath), content) to write the content.
         //  This creates the file if it doesn't exist, or overwrites it if it does.
-
+        Files.writeString(Path.of(filePath), content);
     }
 
     /**
@@ -41,7 +41,7 @@ public class FileWriting {
         // TODO: 2 - Use Files.writeString with StandardOpenOption.APPEND to append text.
         //  Add a newline ("\n") before the text so it appears on a new line.
         //  Example: Files.writeString(Path.of(filePath), "\n" + text, StandardOpenOption.APPEND);
-
+        Files.writeString(Path.of(filePath), "\n" + text, StandardOpenOption.APPEND);
     }
 
     /**
@@ -54,7 +54,7 @@ public class FileWriting {
     public static void writeLines(String filePath, List<String> lines) throws IOException {
         // TODO: 3 - Use Files.write(Path.of(filePath), lines) to write all lines.
         //  Each string in the list becomes one line in the file.
-
+    Files.write(Path.of(filePath), lines);
     }
 
     /**
@@ -74,6 +74,13 @@ public class FileWriting {
         //      writer.write("Line 3");
         //  }
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("Line 1");
+            writer.newLine();
+            writer.write("Line 2");
+            writer.newLine();
+            writer.write("Line 3");
+        }
     }
 
     /**
@@ -90,6 +97,8 @@ public class FileWriting {
         //  Note: Files.copy will throw if destination already exists unless you add
         //  StandardCopyOption.REPLACE_EXISTING.
 
+         String content = Files.readString(Path.of(sourcePath));
+         Files.writeString(Path.of(destinationPath), content);
     }
 
     /**
@@ -106,24 +115,44 @@ public class FileWriting {
         //  Then, for each row, write the values joined by commas, followed by a newline.
         //  Use StringBuilder or String.join(",", array) to build each line.
         //  Write the complete result using Files.writeString().
+        StringBuilder csvContent = new StringBuilder();
+
+        //Join and add headers
+        csvContent.append(String.join(",", headers)).append("\n");
+
+        //join and add ech row
+        for (String[] row : rows) {
+            csvContent.append(String.join(",", row)).append("\n");
+        }
+        //Write the built string out to the file
+        Files.writeString(Path.of(filePath), csvContent.toString());
 
     }
 
     public static void main(String[] args) throws IOException {
+        // 1. Setting up the test environment
+        //Define a folder name where all our est files will live
         String baseDir = "test-output";
+        //create the "test output" directory on your computer if it does not exist yet
         Files.createDirectories(Path.of(baseDir));
 
+        //2. Exercise 1: Write String
         System.out.println("=== Write String ===");
+        //Clues "test-output" and "/write-test.txt" together to form the path
         writeString(baseDir + "/write-test.txt", "Hello, File!");
+        //Reads it back immediately and prints it to the screen to show that it worked
         System.out.println("Written. Content: " + Files.readString(Path.of(baseDir + "/write-test.txt")));
 
         System.out.println("\n=== Append to File ===");
+        //appends text to the bottom of the file we just made
         appendToFile(baseDir + "/write-test.txt", "This was appended!");
         System.out.println("Appended. Content:\n" + Files.readString(Path.of(baseDir + "/write-test.txt")));
 
         System.out.println("\n=== Write Lines ===");
+        //Saves a pre-made list of fruits to a new file, putting each fruit on a new line
         writeLines(baseDir + "/lines-test.txt", List.of("Apple", "Banana", "Cherry"));
         System.out.println("Lines written:");
+        //Ready every line from the file and prints them out one by one
         Files.readAllLines(Path.of(baseDir + "/lines-test.txt")).forEach(System.out::println);
 
         System.out.println("\n=== BufferedWriter ===");
@@ -136,12 +165,14 @@ public class FileWriting {
         System.out.println("Copied. Content:\n" + Files.readString(Path.of(baseDir + "/copy-test.txt")));
 
         System.out.println("\n=== Write CSV ===");
+        //Setup spreadsheet headers and data arrays
         String[] headers = {"Name", "Age", "City"};
         String[][] rows = {
                 {"Alice", "30", "London"},
                 {"Bob", "25", "Paris"},
                 {"Charlie", "35", "Tokyo"}
         };
+        //converts the tables into text rows separated by commas and saves it
         writeCsv(baseDir + "/data.csv", headers, rows);
         System.out.println("CSV written:");
         System.out.println(Files.readString(Path.of(baseDir + "/data.csv")));
