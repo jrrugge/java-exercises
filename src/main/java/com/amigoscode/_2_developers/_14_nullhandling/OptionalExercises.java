@@ -22,7 +22,7 @@ public class OptionalExercises {
     public static Optional<String> createOptional(String value) {
         // TODO: 1 - Use Optional.of(value) to create and return an Optional.
         //  Note: Optional.of() will throw NullPointerException if value is null.
-        return null;
+        return Optional.of(value);
     }
 
     /**
@@ -35,7 +35,10 @@ public class OptionalExercises {
     public static Optional<String> createNullableOptional(String value) {
         // TODO: 2 - Use Optional.ofNullable(value) to safely create an Optional.
         //  This returns Optional.empty() if value is null, or Optional.of(value) otherwise.
-        return null;
+        return Optional.ofNullable(value);
+        //this option is design to handle uncertainty unlike optional.of
+        //this is your primary bridge between old Java code (which uses null) and modern java code
+        //which uses optional. use it when wrpaping databases results, API responses or maplookups that might return nothing.
     }
 
     /**
@@ -50,7 +53,10 @@ public class OptionalExercises {
         //  If present, return optional.get().
         //  If not present, return "EMPTY".
         //  Note: calling get() on an empty Optional throws NoSuchElementException!
-        return null;
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return "EMPTY";
     }
 
     /**
@@ -64,7 +70,8 @@ public class OptionalExercises {
         // TODO: 4 - Use optional.orElse(defaultValue) to return the value if present,
         //  or defaultValue if the Optional is empty.
         //  This is cleaner than using isPresent() + get().
-        return null;
+        return optional.orElse(defaultValue);
+        //Use optional to do everything in one line of code.
     }
 
     /**
@@ -79,7 +86,8 @@ public class OptionalExercises {
         //  or throw NoSuchElementException if empty.
         //  You can also use orElseThrow(() -> new RuntimeException("No value!"))
         //  to throw a custom exception.
-        return null;
+        return optional.orElseThrow();
+        // or throw NosuchElementException is empty.
     }
 
     /**
@@ -93,7 +101,11 @@ public class OptionalExercises {
         // TODO: 6 - Use optional.map(String::toUpperCase) to transform the value.
         //  map() applies the function if a value is present, and returns a new Optional.
         //  If the original Optional is empty, map() returns an empty Optional.
-        return null;
+        return optional.map(String::toUpperCase);
+        //The map() method allows you to apply a transformation function to th inner value.
+        //If a value is present, map() tansforms it and wraps the result in a new optional.
+        //If the container is empty, map does nothing it safely passes along an empty optional, meaning
+        //You can prevent conditional checking. You can chain data transformationas safely without worrying about triggering a null pointer exception.
     }
 
     /**
@@ -108,7 +120,8 @@ public class OptionalExercises {
         //  flatMap() is like map(), but used when the transformation function itself
         //  returns an Optional. It "flattens" Optional<Optional<String>> to Optional<String>.
         //  Call: emailOptional.flatMap(OptionalExercises::getDomain)
-        return null;
+        return emailOptional.flatMap(OptionalExercises::getDomain);
+    //It allows you to smoothly chain complex, multi-step operations that might fail or return empty at any stage, without creating an unreadable mess of nested Optional wrappers.
     }
 
     /**
